@@ -61,10 +61,8 @@ public final class SimpleGUI {
         this.controller = controller;
     }
 
-    /* 
     public static void main(final String... args){
         new SimpleGUI().display();
     }
-    */
-
+    
 }

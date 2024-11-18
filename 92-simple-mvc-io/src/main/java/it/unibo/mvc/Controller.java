@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  * Application controller. Performs the I/O.
  */
 public class Controller {
-    File currentFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "output.txt");
+    private File currentFile = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "output.txt");
 
     public void setCurrentFile(File newFile){
         this.currentFile = newFile;

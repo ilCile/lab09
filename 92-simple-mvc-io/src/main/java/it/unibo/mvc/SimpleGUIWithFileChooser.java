@@ -28,18 +28,22 @@ public final class SimpleGUIWithFileChooser {
 
     public SimpleGUIWithFileChooser(){
         final JPanel panel = new JPanel(new BorderLayout());
-        final JTextField text = new JTextField();
-        text.setText(controller.getCurrentFile().getPath());
-        text.setEditable(false);
         final JPanel panel1 = new JPanel(new BorderLayout());
+        final JTextField text = new JTextField();
         final JButton browse = new JButton("Browse...");
-        panel1.add(text, BorderLayout.CENTER);
-        panel1.add(browse, BorderLayout.LINE_END);
-        panel.add(panel1, BorderLayout.NORTH);
         final JTextArea textArea = new JTextArea();
         final JButton save = new JButton("save");
+
+        text.setText(controller.getCurrentFile().getPath());
+        text.setEditable(false);
+
+        panel1.add(text, BorderLayout.CENTER);
+        panel1.add(browse, BorderLayout.LINE_END);
+
+        panel.add(panel1, BorderLayout.NORTH);
         panel.add(textArea, BorderLayout.CENTER);
         panel.add(save, BorderLayout.SOUTH);
+
         frame.add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -52,8 +56,7 @@ public final class SimpleGUIWithFileChooser {
                 if(res == JFileChooser.APPROVE_OPTION){
                     controller.setCurrentFile(chooser.getSelectedFile());
                     text.setText(controller.getCurrentFile().getPath());
-                }else if(res == JFileChooser.CANCEL_OPTION){}
-                else{
+                }else if(res != JFileChooser.CANCEL_OPTION){
                     JOptionPane.showMessageDialog(frame, "ERRORE", "ERRORE", JOptionPane.ERROR_MESSAGE);
                 }
             }
