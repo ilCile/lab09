@@ -10,12 +10,13 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -66,6 +67,32 @@ public class BadIOGUI {
                 }
             }
         });
+
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        canvas.add(panel, BorderLayout.CENTER);
+        panel.add(write, BorderLayout.CENTER);
+        final JButton read = new JButton("read from file");
+        panel.add(read);
+
+        read.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try (
+                final InputStream file = new FileInputStream(PATH);
+                final DataInputStream dstream = new DataInputStream(file)) {
+                    while(dstream.available() > 0){
+                        System.out.println(dstream.readInt());
+                    }  
+                } catch (IOException e2) {
+                    JOptionPane.showMessageDialog(frame, e2, "Error", JOptionPane.ERROR_MESSAGE);
+                    e2.printStackTrace(); // NOPMD: allowed as this is just an exercise
+                }
+            }
+            
+        });
+        
     }
 
     private void display() {
@@ -90,6 +117,7 @@ public class BadIOGUI {
         /*
          * OK, ready to push the frame onscreen
          */
+        frame.pack();
         frame.setVisible(true);
     }
 
