@@ -1,5 +1,11 @@
 package it.unibo.mvc;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,6 +13,7 @@ import java.util.Objects;
 /** */
 public final class SimpleController implements Controller {
 
+    private final File file = new File("." + System.getProperty("file.separator") + "history.txt");
     private String stringToPrint;
     private final List<String> history = new ArrayList<>();
 
@@ -22,7 +29,16 @@ public final class SimpleController implements Controller {
 
     @Override
     public List<String> getPrintHistory() {
-        return new ArrayList<>(this.history);
+        //return new ArrayList<>(this.history);
+        List<String> list = new ArrayList<>();
+        try (BufferedReader b = new BufferedReader(new FileReader(file))) {
+            while(b.readLine() != null) {
+                list.add(b.readLine());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage()); //NOPMD
+        }
+        return list;
     }
 
     @Override
@@ -32,5 +48,10 @@ public final class SimpleController implements Controller {
         }
         System.out.println(this.stringToPrint); //NOPMD
         this.history.add(this.stringToPrint);
+        try (DataOutputStream w = new DataOutputStream(new FileOutputStream(file, true))) {
+            w.writeChars(this.stringToPrint + "\n");
+        } catch (final IOException e) {
+            System.out.println(e.getMessage()); //NOPMD
+        }
     }
 }

@@ -43,6 +43,7 @@ public final class SimpleGUI {
         print.addActionListener(e -> {
             controller.setStringToPrint(text.getText());
             controller.printString();
+            text.setText("");
         });
 
         history.addActionListener(e -> textArea.setText(String.join("\n", controller.getPrintHistory())));
