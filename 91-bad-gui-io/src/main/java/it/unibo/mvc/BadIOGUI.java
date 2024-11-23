@@ -11,7 +11,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,9 +28,7 @@ import java.util.Random;
 public class BadIOGUI {
 
     private static final String TITLE = "A very simple GUI application";
-    private static final String PATH = System.getProperty("user.home")
-            + File.separator
-            + BadIOGUI.class.getSimpleName() + ".txt";
+    private static final String PATH = "." + System.getProperty("file.separator") + "file.txt";
     private static final int PROPORTION = 5;
     private final Random randomGenerator = new Random();
     private final JFrame frame = new JFrame(TITLE);
@@ -82,9 +79,7 @@ public class BadIOGUI {
                 try (
                 final InputStream file = new FileInputStream(PATH);
                 final DataInputStream dstream = new DataInputStream(file)) {
-                    while(dstream.available() > 0){
-                        System.out.println(dstream.readInt());
-                    }  
+                System.out.println(dstream.readInt());
                 } catch (IOException e2) {
                     JOptionPane.showMessageDialog(frame, e2, "Error", JOptionPane.ERROR_MESSAGE);
                     e2.printStackTrace(); // NOPMD: allowed as this is just an exercise

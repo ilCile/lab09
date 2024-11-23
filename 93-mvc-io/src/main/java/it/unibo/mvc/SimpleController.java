@@ -32,7 +32,7 @@ public final class SimpleController implements Controller {
         //return new ArrayList<>(this.history);
         List<String> list = new ArrayList<>();
         try (BufferedReader b = new BufferedReader(new FileReader(file))) {
-            while(b.readLine() != null) {
+            for(int i = 0; i < this.history.size(); i++) {
                 list.add(b.readLine());
             }
         } catch (Exception e) {
